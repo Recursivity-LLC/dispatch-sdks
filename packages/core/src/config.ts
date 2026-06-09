@@ -33,6 +33,9 @@ export interface DispatchOptions {
   debug?: boolean;
   /** Base URL for human-facing report links. Default: the origin of `endpoint`. */
   reportBaseUrl?: string | null;
+  /** Budget (ms) for draining the event queue at process exit; 0 skips the exit flush.
+   *  Default 3000. Mirrors the gem's shutdown_timeout (seconds there, ms here). */
+  shutdownTimeout?: number;
 }
 
 export interface DispatchConfig {
@@ -50,6 +53,7 @@ export interface DispatchConfig {
   tags: Tags;
   sdk: { name: string; version: string };
   debug: boolean;
+  shutdownTimeout: number;
 }
 
 // Default error endpoint: same host, last path segment swapped to /store
@@ -91,6 +95,7 @@ export function resolveConfig(options: DispatchOptions): DispatchConfig {
     tags: options.tags ?? {},
     sdk: options.sdk ?? { name: SDK_NAME, version: SDK_VERSION },
     debug: options.debug ?? false,
+    shutdownTimeout: options.shutdownTimeout ?? 3000,
   };
 }
 

@@ -35,6 +35,10 @@ class Config:
     sdk_version: str
     debug: bool
     project_root: str
+    # Process lifecycle: report the exception killing the process (sys.excepthook)
+    # and drain the send queue at exit. Mirrors the gem's capture_at_exit/shutdown_timeout.
+    capture_at_exit: bool
+    shutdown_timeout: float
 
 
 def derive_error_endpoint(endpoint: str) -> str:
@@ -68,6 +72,8 @@ def resolve_config(
     sdk_version: str = SDK_VERSION,
     debug: bool = False,
     project_root: Optional[str] = None,
+    capture_at_exit: bool = True,
+    shutdown_timeout: float = 3.0,
 ) -> Config:
     return Config(
         api_key=api_key,
@@ -92,6 +98,8 @@ def resolve_config(
         sdk_version=sdk_version,
         debug=debug,
         project_root=project_root or os.getcwd(),
+        capture_at_exit=capture_at_exit,
+        shutdown_timeout=shutdown_timeout,
     )
 
 

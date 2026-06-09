@@ -35,8 +35,15 @@ imports solely from `@dispatch/node`.
 - `init` sets `platform: "node"`, the `dispatch-node` SDK identity, and a source-context stack
   parser rooted at `cwd` (default `process.cwd()`). `in_app` = under the project root and not in
   `node_modules` / `node:` internals.
-- After capturing an `uncaughtException` the handler flushes and, by default, `exit(1)` — the
-  process was already in an undefined state. Override with `onFatalError` or `exitOnUncaught: false`.
+- The handlers preserve Node's native crash behavior — capture, then print the error and
+  `exit(1)` (registering a listener would otherwise suppress both). `uncaughtException`:
+  override with `onFatalError` or `exitOnUncaught: false`. `unhandledRejection`: fatal by
+  default exactly like Node's own `--unhandled-rejections=throw`; opt out with
+  `exitOnUnhandledRejection: false` (this keeps the process alive, which Node alone would not).
+- Shutdown flush: the event queue drains on `beforeExit` and before any fatal exit, budgeted by
+  `shutdownTimeout` (ms, default 3000; the gem's `shutdown_timeout` analogue). Disable the
+  `beforeExit` hook with `flushOnBeforeExit: false`. Fatal events are tagged
+  `source: uncaughtException` / `unhandledRejection` (the gem's `at_exit` / `rake` analogues).
 
 ## Scripts
 

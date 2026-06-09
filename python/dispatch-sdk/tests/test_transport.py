@@ -61,6 +61,24 @@ def test_post_ticket_none_on_non_2xx_or_no_response():
     assert t2.post_ticket({"ticket": {"description": "x"}}) is None
 
 
+def test_flush_waits_for_the_in_flight_event():
+    gate = threading.Event()
+    entered = threading.Event()
+
+    def post_func(url, headers, body):
+        entered.set()  # popped from the queue; POST now in flight
+        gate.wait(2)
+        return (200, "{}")
+
+    t = Transport(config, post_func=post_func)
+    t.send_event(_event("e1"))
+    assert entered.wait(2)
+    # Queue is empty but the event hasn't been delivered — flush must not claim success.
+    assert t.flush(timeout=0.1) is False
+    gate.set()
+    assert t.flush(timeout=2) is True
+
+
 def test_bounds_queue_dropping_overflow():
     gate = threading.Event()
     entered = threading.Event()

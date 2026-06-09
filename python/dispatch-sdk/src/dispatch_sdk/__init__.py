@@ -26,6 +26,7 @@ from typing import Any, Dict, Optional
 from .client import Client
 from .config import Config, resolve_config
 from .event import build_event
+from .lifecycle import install_lifecycle_hooks
 from .ticket import build_ticket_payload
 from .version import CONTRACT_VERSION, SDK_NAME, SDK_VERSION
 
@@ -35,6 +36,7 @@ __all__ = [
     "capture_exception",
     "report",
     "flush",
+    "install_lifecycle_hooks",
     "Client",
     "Config",
     "resolve_config",
@@ -46,12 +48,24 @@ __all__ = [
 ]
 
 _default_client: Optional[Client] = None
+_uninstall_lifecycle: Optional[Any] = None
 
 
 def init(**options: Any) -> Client:
-    """Initialise the default client. Call once at startup. Returns it for direct use."""
-    global _default_client
+    """Initialise the default client. Call once at startup. Returns it for direct use.
+
+    Installs the process-lifecycle hooks (sys.excepthook capture + atexit queue flush)
+    by default; pass install_lifecycle_hooks=False to opt out. Re-initialising replaces
+    the previous client's hooks.
+    """
+    global _default_client, _uninstall_lifecycle
+    install_hooks = options.pop("install_lifecycle_hooks", True)
+    if _uninstall_lifecycle is not None:
+        _uninstall_lifecycle()
+        _uninstall_lifecycle = None
     _default_client = Client(**options)
+    if install_hooks:
+        _uninstall_lifecycle = install_lifecycle_hooks(_default_client)
     return _default_client
 
 

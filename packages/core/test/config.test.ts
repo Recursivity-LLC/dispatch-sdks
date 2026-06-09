@@ -33,6 +33,11 @@ describe("config derivations", () => {
     expect(c.errorSampleRate).toBe(1.0);
     expect(c.captureExceptions).toBe(true);
     expect(c.sdk.name).toBe("dispatch-js");
+    expect(c.shutdownTimeout).toBe(3000);
+  });
+
+  it("honours an explicit shutdownTimeout (including 0 to disable the exit flush)", () => {
+    expect(resolveConfig({ apiKey: "x", shutdownTimeout: 0 }).shutdownTimeout).toBe(0);
   });
 
   it("honours an explicit errorEndpoint override", () => {

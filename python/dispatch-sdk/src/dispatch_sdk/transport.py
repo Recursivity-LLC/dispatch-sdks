@@ -61,10 +61,21 @@ class Transport:
             return None
 
     def flush(self, timeout: float = 2.0) -> bool:
-        deadline = time.time() + timeout
-        while not self._queue.empty() and time.time() < deadline:
-            time.sleep(0.005)
-        return self._queue.empty()
+        """Block until queued AND in-flight events are fully sent, or the deadline passes.
+
+        Waits on the queue's unfinished-task count (Queue.join with a deadline) rather than
+        emptiness: the last event leaves the queue before its POST completes, and at process
+        exit that in-flight window is exactly what a flush must cover.
+        """
+        q = self._queue
+        deadline = time.monotonic() + timeout
+        with q.all_tasks_done:
+            while q.unfinished_tasks:
+                remaining = deadline - time.monotonic()
+                if remaining <= 0:
+                    return False
+                q.all_tasks_done.wait(remaining)
+        return True
 
     def _ensure_worker(self) -> None:
         with self._lock:

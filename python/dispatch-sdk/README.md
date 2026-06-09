@@ -23,9 +23,22 @@ except Exception:
 
 # File a curated report (the API-only analogue of the widget):
 dispatch_sdk.report(description="Nightly import aborted: upstream 502", severity="high")
-
-dispatch_sdk.flush()                            # before the process exits
 ```
+
+### Process lifecycle (crash capture + shutdown flush)
+
+`init()` installs the gem's `at_exit` analogues by default:
+
+- **`sys.excepthook`** — the exception about to kill the process (a crashing script,
+  runner, or worker boot) is reported with `source: excepthook`, then chained to the
+  previous hook so the native traceback still prints. `KeyboardInterrupt` is skipped —
+  SIGINT is how process managers ask for a graceful stop, the gem's SIGTERM rule.
+- **`atexit` flush** — the send queue drains at exit (up to `shutdown_timeout` seconds,
+  default 3.0; 0 skips) so shutdowns don't drop just-captured events. An explicit
+  `dispatch_sdk.flush()` is no longer needed before exit.
+
+Opt out per hook with `capture_at_exit=False` / `shutdown_timeout=0`, or skip both with
+`init(..., install_lifecycle_hooks=False)`.
 
 ## What's in the box
 
@@ -38,6 +51,7 @@ dispatch_sdk.flush()                            # before the process exits
 | `transport` | Daemon worker + bounded `queue.Queue(maxsize=100)`, drop-on-overflow, stdlib `urllib`, never raises. |
 | `sampling` / `dedup` | `rand > rate` sampling; WeakSet identity dedup. |
 | `client` | The capture pipeline: gate → dedup → sample → build → `before_send` → deliver. Never raises. |
+| `lifecycle` | `sys.excepthook` crash capture + `atexit` queue flush (the gem's `at_exit` analogue). |
 
 The wire shape is pinned by `../../contract`; `tests/test_conformance.py` validates output
 against those schemas.
