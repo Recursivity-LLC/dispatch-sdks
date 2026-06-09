@@ -33,8 +33,8 @@ We build this out in phases (see the design doc in the product repo). Current st
 - **Phase 4 — browser error tracker** ✅ `@dispatch/browser`: real cross-browser stack parser,
   breadcrumbs + `user_path`, fetch-keepalive→sendBeacon (`?sentry_key=` fallback), window
   error/unhandledrejection handlers, and a self-contained IIFE `<script>` drop-in.
-- **Phase 5 — bug-report widget** ✅ `@dispatch/browser/widget`: the `_widget.html.erb` DOM
-  rebuilt in framework-free JS (floating 🐞 button, modal, screenshot picker/drag/paste→base64,
+- **Phase 5 — feedback widget** ✅ `@dispatch/browser/widget`: the `_widget.html.erb` DOM
+  rebuilt in framework-free JS (floating 💬 button, modal, screenshot picker/drag/paste→base64,
   toast), a separate entry + IIFE drop-in, reusing the transport. Matches `ticket.widget.json`.
 - **Later** — thin React/Vue wrappers; hardening (browser source maps, structured error
   responses, FastAPI asyncio transport); the 1.0 release on contract v1.

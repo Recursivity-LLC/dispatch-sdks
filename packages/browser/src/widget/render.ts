@@ -25,9 +25,9 @@ export function buildWidgetDom(doc: Document, position: ButtonPosition): WidgetR
 
   const button = doc.createElement("button");
   button.type = "button";
-  button.setAttribute("aria-label", "Report a bug");
+  button.setAttribute("aria-label", "Send feedback");
   button.style.cssText = buttonStyle(position);
-  button.textContent = "🐞";
+  button.textContent = "💬";
 
   const modal = doc.createElement("div");
   modal.hidden = true;
@@ -39,7 +39,7 @@ export function buildWidgetDom(doc: Document, position: ButtonPosition): WidgetR
   const header = doc.createElement("div");
   header.style.cssText = STYLES.header;
   const h2 = doc.createElement("h2");
-  h2.textContent = "REPORT A BUG";
+  h2.textContent = "SEND FEEDBACK";
   h2.style.cssText = STYLES.h2;
   const closeButton = doc.createElement("button");
   closeButton.type = "button";
@@ -49,12 +49,13 @@ export function buildWidgetDom(doc: Document, position: ButtonPosition): WidgetR
 
   const hint = doc.createElement("p");
   hint.textContent =
-    "Describe what went wrong. We'll capture the URL, browser, and environment automatically.";
+    "Found a bug, want a feature, or think something should work differently? Tell us. We'll capture the URL, browser, and environment automatically.";
   hint.style.cssText = STYLES.hint;
 
   const description = doc.createElement("textarea");
   description.rows = 5;
-  description.placeholder = "When I clicked Save, the page returned a 500...";
+  description.placeholder =
+    "When I clicked Save, the page returned a 500… or: It'd be great if I could export this list as CSV.";
   description.style.cssText = STYLES.textarea;
 
   const fileInput = doc.createElement("input");
@@ -88,7 +89,7 @@ export function buildWidgetDom(doc: Document, position: ButtonPosition): WidgetR
   cancelButton.style.cssText = STYLES.cancelButton;
   const submit = doc.createElement("button");
   submit.type = "button";
-  submit.textContent = "Report";
+  submit.textContent = "Send";
   submit.style.cssText = STYLES.reportButton;
   footer.append(cancelButton, submit);
 
@@ -97,7 +98,7 @@ export function buildWidgetDom(doc: Document, position: ButtonPosition): WidgetR
 
   const toast = doc.createElement("div");
   toast.hidden = true;
-  toast.textContent = "✓ Issue reported. Thanks!";
+  toast.textContent = "✓ Feedback sent. Thanks!";
   toast.style.cssText = STYLES.toast;
 
   root.append(button, modal, toast);

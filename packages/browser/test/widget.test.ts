@@ -46,17 +46,17 @@ afterEach(() => {
 });
 
 describe("Widget", () => {
-  it("mounts a floating 🐞 button and a hidden modal", () => {
+  it("mounts a floating 💬 button and a hidden modal", () => {
     mountWidget();
-    const button = document.querySelector<HTMLButtonElement>("[aria-label='Report a bug']");
-    expect(button?.textContent).toBe("🐞");
+    const button = document.querySelector<HTMLButtonElement>("[aria-label='Send feedback']");
+    expect(button?.textContent).toBe("💬");
     const modal = document.querySelector<HTMLElement>("[data-dispatch-widget] > div");
     expect(modal?.hidden).toBe(true);
   });
 
   it("opens the modal on button click", () => {
     mountWidget();
-    document.querySelector<HTMLButtonElement>("[aria-label='Report a bug']")!.click();
+    document.querySelector<HTMLButtonElement>("[aria-label='Send feedback']")!.click();
     const modal = document.querySelector<HTMLElement>("[data-dispatch-widget] > div");
     expect(modal?.hidden).toBe(false);
   });
@@ -64,12 +64,14 @@ describe("Widget", () => {
   it("requires at least 5 characters before submitting", async () => {
     const { submitted } = mountWidget();
     document.querySelector<HTMLTextAreaElement>("textarea")!.value = "no";
-    buttonByText("Report").click();
+    buttonByText("Send").click();
     await Promise.resolve();
     expect(submitted).toHaveLength(0);
     // the error node is the shown (display:block) div carrying the message
     const errorEl = Array.from(document.querySelectorAll("div")).find(
-      (d) => d.style.display === "block" && (d.textContent ?? "").includes("at least 5"),
+      (d) =>
+        d.style.display === "block" &&
+        (d.textContent ?? "").includes("Please add a little more detail (at least 5 characters)."),
     );
     expect(errorEl).toBeTruthy();
   });
@@ -78,7 +80,7 @@ describe("Widget", () => {
     const { submitted } = mountWidget();
     document.querySelector<HTMLTextAreaElement>("textarea")!.value =
       "When I clicked Save the page 500'd";
-    buttonByText("Report").click();
+    buttonByText("Send").click();
     await vi.waitFor(() => expect(submitted).toHaveLength(1));
 
     const ticket = ticketOf(submitted[0]!);
@@ -104,7 +106,7 @@ describe("Widget", () => {
     expect(buttonByText("📎 Attach screenshots (1/5)")).toBeTruthy();
 
     document.querySelector<HTMLTextAreaElement>("textarea")!.value = "here is a screenshot report";
-    buttonByText("Report").click();
+    buttonByText("Send").click();
     await vi.waitFor(() => expect(submitted).toHaveLength(1));
     const ticket = ticketOf(submitted[0]!);
     expect(ticket.screenshots).toEqual([
@@ -121,7 +123,7 @@ describe("Widget", () => {
   it("tracks the click path (skipping clicks inside the widget)", async () => {
     const { submitted } = mountWidget();
     // a click inside the widget (the button) must NOT enter the path
-    document.querySelector<HTMLButtonElement>("[aria-label='Report a bug']")!.click();
+    document.querySelector<HTMLButtonElement>("[aria-label='Send feedback']")!.click();
     // a click outside the widget does
     const outside = document.createElement("button");
     outside.textContent = "Checkout";
@@ -129,11 +131,11 @@ describe("Widget", () => {
     outside.dispatchEvent(new MouseEvent("click", { bubbles: true }));
 
     document.querySelector<HTMLTextAreaElement>("textarea")!.value = "report after clicking around";
-    buttonByText("Report").click();
+    buttonByText("Send").click();
     await vi.waitFor(() => expect(submitted).toHaveLength(1));
     const userPath = ticketOf(submitted[0]!).metadata.user_path as string[];
     expect(userPath).toContain('button "Checkout"');
-    expect(userPath.some((p) => p.includes("Report a bug") || p === "🐞")).toBe(false);
+    expect(userPath.some((p) => p.includes("Send feedback") || p === "💬")).toBe(false);
   });
 
   it("captures console.error when enabled and restores it on unmount", async () => {
@@ -143,7 +145,7 @@ describe("Widget", () => {
 
     console.error("widget-test-boom");
     document.querySelector<HTMLTextAreaElement>("textarea")!.value = "console capture report";
-    buttonByText("Report").click();
+    buttonByText("Send").click();
     await vi.waitFor(() => expect(submitted).toHaveLength(1));
     expect(ticketOf(submitted[0]!).metadata.console_errors).toContain("widget-test-boom");
 

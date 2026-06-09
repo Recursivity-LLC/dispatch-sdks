@@ -1,4 +1,4 @@
-"""dispatch-sdk — the Python client for Dispatch (error tracking + bug reports).
+"""dispatch-sdk — the Python client for Dispatch (error tracking + feedback reports).
 
 Minimal usage:
 

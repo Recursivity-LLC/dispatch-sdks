@@ -4,10 +4,10 @@ The framework-agnostic core of the [Dispatch](https://dispatchit.app) SDKs: conf
 the Sentry-shaped event builder, client-side sampling, dedup, the `before_send` hook, the
 ticket/report client, and a bounded async transport.
 
-On its own it's a usable **minimal SDK** — manual exception capture and programmatic bug
+On its own it's a usable **minimal SDK** — manual exception capture and programmatic feedback
 reports — anywhere a global `fetch` exists (Node 18+, modern browsers). Runtime packages build
 on it: `@dispatch/node` (source context, global handlers, flush-on-exit), `@dispatch/browser`
-(the error tracker + bug-report widget), and the framework adapters.
+(the error tracker + feedback widget), and the framework adapters.
 
 ```ts
 import { init, captureException, report, flush } from "@dispatch/core";

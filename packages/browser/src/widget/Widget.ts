@@ -69,7 +69,7 @@ function defaultUuid(): string {
   });
 }
 
-// The floating bug-report widget. Rebuilds the gem's _widget.html.erb DOM and ports the
+// The floating feedback widget. Rebuilds the gem's _widget.html.erb DOM and ports the
 // widget.js controller: modal UX, screenshot capture (picker/drag/paste → base64), the
 // click-path + console breadcrumbs, and the ticket submit (with Idempotency-Key + widget
 // version headers). Separate from the error tracker so you can ship one without the other.
@@ -278,12 +278,12 @@ export class Widget {
   private async submit(): Promise<void> {
     const description = this.refs.description.value.trim();
     if (description.length < 5) {
-      this.showError("Please describe what went wrong (at least 5 characters).");
+      this.showError("Please add a little more detail (at least 5 characters).");
       return;
     }
 
     this.refs.submit.disabled = true;
-    this.refs.submit.textContent = "Reporting…";
+    this.refs.submit.textContent = "Sending…";
 
     const win = this.doc.defaultView;
     const payload = buildWidgetTicket({
@@ -318,10 +318,10 @@ export class Widget {
       this.close();
       this.showToast();
     } catch {
-      this.showError("Something went wrong submitting your report.");
+      this.showError("Something went wrong sending your feedback.");
     } finally {
       this.refs.submit.disabled = false;
-      this.refs.submit.textContent = "Report";
+      this.refs.submit.textContent = "Send";
     }
   }
 

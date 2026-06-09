@@ -18,7 +18,8 @@ request specs.
 ## The two payloads, two endpoints
 
 1. **Tickets** — `POST {endpoint}` (default `https://{tenant}.dispatchit.app/api/v1/tickets`).
-   Curated bug reports from the widget and from programmatic `report()`. Auth:
+   Curated feedback (bugs, feature requests, suggestions) from the widget and from
+   programmatic `report()`. Auth:
    `Authorization: Bearer dsp_live_…`. Optional `Idempotency-Key` (UUID, 24h replay window) and
    `X-Dispatch-Widget-Version`. Body: `ticket.schema.json`. Response: `{ id, status, url }`.
 2. **Errors** — `POST {error_endpoint}` (default: the tickets endpoint with the last path

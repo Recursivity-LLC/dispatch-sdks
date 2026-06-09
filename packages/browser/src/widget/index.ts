@@ -1,4 +1,4 @@
-// @dispatch/browser/widget — the floating bug-report widget.
+// @dispatch/browser/widget — the floating feedback widget.
 //
 // A separate entry from the error tracker so a page can include one without the other.
 //

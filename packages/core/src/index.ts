@@ -3,7 +3,7 @@
 // On its own this is a usable minimal SDK (manual capture + report()) anywhere a global
 // `fetch` exists (Node 18+, browsers). Runtime packages layer on top: @dispatch/node adds
 // source context, global handlers and flush-on-exit; @dispatch/browser adds the error tracker
-// and the bug-report widget; framework adapters add middleware.
+// and the feedback widget; framework adapters add middleware.
 
 import { Client, type ClientOptions, type CaptureContext } from "./client";
 import type { ReportInput } from "./ticket";

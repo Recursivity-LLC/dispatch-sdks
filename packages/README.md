@@ -10,7 +10,7 @@ Landing in **Phase 1+** (server-side first, per the approved plan):
 | `node/` | `@dispatch/node` | 2 | Node server SDK: `captureException`, V8 stack parser, `fs` source context, bounded flush-queue transport, `uncaughtException`/`unhandledRejection` hooks. |
 | `express/` | `@dispatch/express` | 3 | Express error-handler + request-context middleware. |
 | `fastify/` | `@dispatch/fastify` | 3 | Fastify `onError` plugin. |
-| `browser/` | `@dispatch/browser` | 4 ✅ / 5 ✅ | Browser error tracker (`.`) + bug-report widget (`./widget`): real cross-browser stack parser, breadcrumbs, beacon transport, rebuilt widget DOM with screenshot capture. ESM/CJS + two IIFE `<script>` drop-ins. |
+| `browser/` | `@dispatch/browser` | 4 ✅ / 5 ✅ | Browser error tracker (`.`) + feedback widget (`./widget`): real cross-browser stack parser, breadcrumbs, beacon transport, rebuilt widget DOM with screenshot capture. ESM/CJS + two IIFE `<script>` drop-ins. |
 | `react/`, `vue/` | `@dispatch/react`, `@dispatch/vue` | later | Thin wrappers mounting `@dispatch/browser` + error boundaries. |
 
 Each builds with tsup (ESM + CJS + `.d.ts`), tests with Vitest + MSW, typechecks under TS strict.

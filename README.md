@@ -20,7 +20,7 @@ packages/        ← JavaScript/TypeScript SDKs (pnpm workspace, @dispatch/* on 
   core/            framework-agnostic core (config, event schema, sampling, transport types)
   node/            Node server SDK (manual capture, auto-capture, source context)
   express/         Express adapter            fastify/  Fastify adapter
-  browser/         browser error tracker + bug-report widget        (later phase)
+  browser/         browser error tracker + feedback widget          (later phase)
   react/  vue/     thin UI wrappers           (later phase)
 python/          ← Python SDK (dispatch-sdk on PyPI, framework extras)
 conformance/     ← cross-language golden-fixture runner (the invariant gate)

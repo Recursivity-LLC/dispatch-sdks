@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://dispatchit.app/contract/v1/ticket.schema.json",
   "title": "Dispatch ticket create request",
-  "description": "The body posted to the Dispatch tickets endpoint (POST {endpoint}, default /api/v1/tickets) by the bug-report widget and by programmatic report() calls. Mirrors Api::V1::TicketsController#ticket_params and the Ticket model constants.",
+  "description": "The body posted to the Dispatch tickets endpoint (POST {endpoint}, default /api/v1/tickets) by the feedback widget and by programmatic report() calls. Mirrors Api::V1::TicketsController#ticket_params and the Ticket model constants.",
   "type": "object",
   "required": ["ticket"],
   "additionalProperties": false,

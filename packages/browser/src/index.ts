@@ -2,7 +2,7 @@
 //
 // Captures uncaught errors + unhandled promise rejections (Sentry-shaped, platform
 // "javascript"), with breadcrumbs and the user_path, and ships them via fetch-keepalive /
-// sendBeacon. This entry is the error tracker only — the bug-report widget ships separately so
+// sendBeacon. This entry is the error tracker only — the feedback widget ships separately so
 // you can include error tracking without the modal DOM.
 
 import {
