@@ -1,0 +1,29 @@
+# Node
+node_modules/
+dist/
+*.tsbuildinfo
+.npm/
+.pnpm-store/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.nox/
+.tox/
+build/
+*.egg-info/
+dist-python/
+
+# Tooling
+.DS_Store
+coverage/
+.cache/
+*.log
+
+# Local fixture regeneration scratch
+tmp/

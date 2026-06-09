@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dispatchit.app/contract/v1/ticket.schema.json",
+  "title": "Dispatch ticket create request",
+  "description": "The body posted to the Dispatch tickets endpoint (POST {endpoint}, default /api/v1/tickets) by the bug-report widget and by programmatic report() calls. Mirrors Api::V1::TicketsController#ticket_params and the Ticket model constants.",
+  "type": "object",
+  "required": ["ticket"],
+  "additionalProperties": false,
+  "properties": {
+    "ticket": {
+      "type": "object",
+      "required": ["description"],
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Required. Max 10000 BYTES (not chars) — server returns 422 description_too_long beyond that.",
+          "maxLength": 10000
+        },
+        "title": {
+          "type": "string",
+          "description": "Optional. Server derives it from the first line of description (first 140 chars) when omitted.",
+          "maxLength": 200
+        },
+        "source": {
+          "type": "string",
+          "description": "Origin of the report. Unknown values are coerced to 'api' server-side.",
+          "enum": ["api", "widget", "honeybadger", "manual", "error", "email"]
+        },
+        "severity": {
+          "type": ["string", "null"],
+          "description": "Optional. Unknown values are dropped to null server-side.",
+          "enum": ["low", "medium", "high", "critical", null]
+        },
+        "reporter": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "email": { "type": ["string", "null"], "format": "email" },
+            "external_id": { "type": ["string", "null"] }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "description": "Arbitrary context. The widget conventionally sends url, user_agent, viewport, referrer, user_path[], console_errors[], plus labels[] and severity_hint. A correlation_id or event_id here links the ticket to an already-captured error group.",
+          "additionalProperties": true,
+          "properties": {
+            "url": { "type": "string" },
+            "user_agent": { "type": "string" },
+            "viewport": { "type": "string", "examples": ["1920x1080"] },
+            "referrer": { "type": ["string", "null"] },
+            "user_path": { "type": "array", "items": { "type": "string" } },
+            "console_errors": { "type": "array", "items": { "type": "string" } },
+            "labels": { "type": "array", "items": { "type": "string" } },
+            "severity_hint": { "type": "string" },
+            "correlation_id": { "type": "string" },
+            "event_id": { "type": "string" }
+          }
+        },
+        "screenshots": {
+          "$ref": "#/$defs/attachmentList",
+          "description": "Long-standing widget key for base64 image attachments. Max 10."
+        },
+        "attachments": {
+          "$ref": "#/$defs/attachmentList",
+          "description": "Alias for screenshots — the general attachments field. Max 10, 15 MB each."
+        }
+      }
+    }
+  },
+  "$defs": {
+    "attachmentList": {
+      "type": "array",
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["data"],
+        "additionalProperties": false,
+        "properties": {
+          "filename": { "type": "string" },
+          "content_type": { "type": "string", "description": "Declared MIME; untrusted — the server sniffs the real type from the bytes." },
+          "data": { "type": "string", "contentEncoding": "base64", "description": "Base64-encoded file bytes." }
+        }
+      }
+    },
+    "ticketCreateResponse": {
+      "type": "object",
+      "description": "201 Created (or 200 on idempotent replay).",
+      "required": ["id", "status", "url"],
+      "properties": {
+        "id": { "type": "integer" },
+        "status": {
+          "type": "string",
+          "enum": ["inbox", "in_development", "needs_input", "ready_to_develop", "building", "ready_for_review", "resolved", "deployed"]
+        },
+        "url": { "type": "string", "format": "uri" }
+      }
+    }
+  }
+}

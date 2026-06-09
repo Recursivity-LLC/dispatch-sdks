@@ -1,0 +1,73 @@
+{
+  "event_id": "00000000000000000000000000000000",
+  "timestamp": 1700000000.0,
+  "platform": "javascript",
+  "level": "error",
+  "environment": "production",
+  "release": "9f8c2a1d",
+  "exception": {
+    "values": [
+      {
+        "type": "TypeError",
+        "value": "Cannot read properties of undefined (reading 'total')",
+        "mechanism": {
+          "type": "onerror",
+          "handled": false
+        },
+        "stacktrace": {
+          "frames": [
+            {
+              "function": "onCheckout",
+              "filename": "https://shop.example.com/assets/checkout-3f9a.js",
+              "abs_path": "https://shop.example.com/assets/checkout-3f9a.js",
+              "lineno": 88,
+              "colno": 5,
+              "in_app": true
+            },
+            {
+              "function": "computeTotal",
+              "filename": "https://shop.example.com/assets/checkout-3f9a.js",
+              "abs_path": "https://shop.example.com/assets/checkout-3f9a.js",
+              "lineno": 42,
+              "colno": 18,
+              "in_app": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "breadcrumbs": {
+    "values": [
+      {
+        "timestamp": 1699999980.0,
+        "category": "ui.click",
+        "level": "info",
+        "message": "a#cart \"Cart\""
+      },
+      {
+        "timestamp": 1699999990.0,
+        "category": "ui.click",
+        "level": "info",
+        "message": "button \"Checkout\""
+      }
+    ]
+  },
+  "user_path": [
+    "a#cart \"Cart\"",
+    "button \"Checkout\""
+  ],
+  "request": {
+    "url": "https://shop.example.com/checkout",
+    "headers": {
+      "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Chrome/124.0"
+    }
+  },
+  "user": {
+    "email": "casey@example.com",
+    "id": "u_99"
+  },
+  "tags": {
+    "area": "checkout"
+  }
+}

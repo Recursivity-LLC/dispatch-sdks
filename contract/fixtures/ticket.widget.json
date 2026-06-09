@@ -1,0 +1,39 @@
+{
+  "ticket": {
+    "description": "When I clicked Save on checkout, the page returned a 500.",
+    "source": "widget",
+    "severity": "high",
+    "reporter": {
+      "email": "casey@example.com",
+      "external_id": "u_99"
+    },
+    "screenshots": [
+      {
+        "filename": "screenshot.png",
+        "content_type": "image/png",
+        "data": "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M8AAAMBAQDJ/pLvAAAAAElFTkSuQmCC"
+      }
+    ],
+    "metadata": {
+      "url": "https://shop.example.com/checkout",
+      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Chrome/124.0",
+      "viewport": "1920x1080",
+      "referrer": "https://shop.example.com/cart",
+      "user_path": [
+        "a#cart \"Cart\"",
+        "button \"Checkout\"",
+        "button \"Save\""
+      ],
+      "console_errors": [
+        "TypeError: Cannot read properties of undefined (reading 'total')"
+      ],
+      "labels": [
+        "checkout",
+        "payments"
+      ],
+      "severity_hint": "high",
+      "release": "9f8c2a1d",
+      "env": "production"
+    }
+  }
+}

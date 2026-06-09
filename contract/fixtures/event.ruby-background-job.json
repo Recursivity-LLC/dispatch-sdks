@@ -1,0 +1,59 @@
+{
+  "event_id": "00000000000000000000000000000000",
+  "timestamp": 1700000000.0,
+  "platform": "ruby",
+  "level": "error",
+  "environment": "production",
+  "release": "9f8c2a1d",
+  "server_name": "web.1.dispatch.internal",
+  "exception": {
+    "values": [
+      {
+        "type": "StandardError",
+        "value": "ImportJob failed: connection reset",
+        "mechanism": {
+          "type": "generic",
+          "handled": false
+        },
+        "stacktrace": {
+          "frames": [
+            {
+              "abs_path": "/srv/app/vendor/bundle/ruby/3.3.0/gems/railties-8.1.0/lib/rails/engine.rb",
+              "filename": "vendor/bundle/ruby/3.3.0/gems/railties-8.1.0/lib/rails/engine.rb",
+              "function": "call",
+              "lineno": 532,
+              "in_app": false
+            },
+            {
+              "abs_path": "/srv/app/lib/inventory.rb",
+              "filename": "lib/inventory.rb",
+              "function": "reserve!",
+              "lineno": 6,
+              "in_app": true,
+              "pre_context": [
+                "module Inventory",
+                "  def self.reserve!(order)",
+                "    client = UpstreamClient.new",
+                "    client.post(\"/reserve\", order_id: order.id)",
+                "  rescue Net::ReadTimeout"
+              ],
+              "context_line": "    raise \"upstream reservation timed out\"",
+              "post_context": [
+                "  end",
+                "end"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "tags": {
+    "source": "ActiveJob",
+    "job_class": "ImportJob"
+  },
+  "sdk": {
+    "name": "dispatch-rails",
+    "version": "0.6.0"
+  }
+}

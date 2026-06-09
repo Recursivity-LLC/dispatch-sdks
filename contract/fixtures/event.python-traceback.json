@@ -1,0 +1,104 @@
+{
+  "event_id": "00000000000000000000000000000000",
+  "timestamp": 1700000000.0,
+  "platform": "python",
+  "level": "error",
+  "environment": "production",
+  "release": "9f8c2a1d",
+  "server_name": "web.1.dispatch.internal",
+  "transaction": "orders.views.OrderView.update",
+  "exception": {
+    "values": [
+      {
+        "type": "ValueError",
+        "value": "Inventory reservation failed for order 42",
+        "mechanism": {
+          "type": "generic",
+          "handled": false
+        },
+        "stacktrace": {
+          "frames": [
+            {
+              "abs_path": "/srv/app/.venv/lib/python3.12/site-packages/django/core/handlers/base.py",
+              "filename": "django/core/handlers/base.py",
+              "function": "_get_response",
+              "lineno": 197,
+              "in_app": false
+            },
+            {
+              "abs_path": "/srv/app/orders/views.py",
+              "filename": "orders/views.py",
+              "function": "update",
+              "lineno": 22,
+              "in_app": true,
+              "pre_context": [
+                "    def update(self, request, pk):",
+                "        order = get_object_or_404(Order, pk=pk)",
+                "        self.check_permissions(request, order)",
+                "        updater = OrderUpdater(order)",
+                "        # apply the submitted changes"
+              ],
+              "context_line": "        updater.call(request.data)",
+              "post_context": [
+                "        return redirect(order)",
+                "",
+                "    def order_params(self, request):",
+                "        return OrderForm(request.data)",
+                ""
+              ]
+            },
+            {
+              "abs_path": "/srv/app/orders/services/order_updater.py",
+              "filename": "orders/services/order_updater.py",
+              "function": "call",
+              "lineno": 14,
+              "in_app": true,
+              "pre_context": [
+                "    def __init__(self, order):",
+                "        self.order = order",
+                "",
+                "    def call(self, attrs):",
+                "        self.order.assign(attrs)"
+              ],
+              "context_line": "        Inventory.reserve(self.order)",
+              "post_context": [
+                "        self.order.save()",
+                "",
+                "        return self.order"
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "request": {
+    "url": "https://shop.example.com/orders/42",
+    "method": "POST",
+    "query_string": "ref=email",
+    "headers": {
+      "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Chrome/124.0",
+      "Referer": "https://shop.example.com/orders",
+      "Accept": "text/html",
+      "Host": "shop.example.com",
+      "X-Request-Id": "5e2c1b90-7a44-4f0b-9e21-0c1d2e3f4a5b"
+    },
+    "env": {
+      "REMOTE_ADDR": "203.0.113.7"
+    }
+  },
+  "user": {
+    "id": "u_99",
+    "email": "casey@example.com",
+    "ip_address": "203.0.113.7"
+  },
+  "tags": {
+    "request_id": "5e2c1b90-7a44-4f0b-9e21-0c1d2e3f4a5b",
+    "transaction": "orders.views.OrderView.update",
+    "area": "checkout"
+  },
+  "sdk": {
+    "name": "dispatch-python",
+    "version": "1.0.0"
+  }
+}

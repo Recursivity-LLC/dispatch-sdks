@@ -1,0 +1,136 @@
+openapi: 3.1.0
+info:
+  title: Dispatch Ingest API
+  version: "1"
+  description: |
+    The Dispatch ingest API. Two endpoints every SDK speaks to:
+
+      * POST /api/v1/tickets — curated bug reports (the widget + report()).
+      * POST /api/v1/store   — Sentry-compatible error events (exception tracking).
+
+    Both authenticate with a project API token (`Authorization: Bearer dsp_live_...`).
+    The canonical error-event shape is defined by ../schema/event.schema.json; the ticket
+    body by ../schema/ticket.schema.json. This OpenAPI document is the human-readable
+    contract — the JSON Schemas are what SDK tests validate against.
+  license:
+    name: MIT
+servers:
+  - url: https://{subdomain}.dispatchit.app
+    variables:
+      subdomain:
+        default: app
+        description: The tenant subdomain. Reports land in that account's Dispatch inbox.
+security:
+  - bearer: []
+paths:
+  /api/v1/tickets:
+    post:
+      summary: Create a ticket (curated bug report)
+      operationId: createTicket
+      tags: [Tickets]
+      parameters:
+        - name: Idempotency-Key
+          in: header
+          required: false
+          description: Optional UUID. Replays within 24h return the original ticket (200 instead of 201).
+          schema:
+            type: string
+            maxLength: 128
+        - name: X-Dispatch-Widget-Version
+          in: header
+          required: false
+          description: Set by the browser widget (e.g. "0.3.0").
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TicketCreateRequest"
+      responses:
+        "201":
+          description: Ticket created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TicketCreateResponse"
+        "200":
+          description: Idempotent replay — the original ticket
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TicketCreateResponse"
+        "401":
+          description: Missing or invalid token
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+        "422":
+          description: Validation failed (e.g. description_too_long, idempotency_key_too_long)
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+  /api/v1/store:
+    post:
+      summary: Ingest an error event (Sentry-compatible)
+      operationId: storeEvent
+      tags: [Errors]
+      description: |
+        Accepts a single Sentry-shaped event. The browser tracker may fall back to
+        navigator.sendBeacon on page unload, which cannot set headers — in that case the
+        token is passed as the `sentry_key` query parameter instead of the Authorization header.
+      parameters:
+        - name: X-Dispatch-Sdk
+          in: header
+          required: false
+          description: Producing SDK + contract version, e.g. "dispatch-node/1.2.0 (contract/1)".
+          schema:
+            type: string
+        - name: sentry_key
+          in: query
+          required: false
+          description: Beacon-only auth fallback (the project token) when headers cannot be set.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ErrorEvent"
+      responses:
+        "200":
+          description: Event accepted
+        "401":
+          description: Missing or invalid token
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/Error" }
+components:
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+      description: Project API token (prefix `dsp_live_`) issued in the Dispatch dashboard.
+  schemas:
+    TicketCreateRequest:
+      $ref: "../schema/ticket.schema.json"
+    TicketCreateResponse:
+      type: object
+      required: [id, status, url]
+      properties:
+        id: { type: integer }
+        status:
+          type: string
+          enum: [inbox, in_development, needs_input, ready_to_develop, building, ready_for_review, resolved, deployed]
+        url: { type: string, format: uri }
+    ErrorEvent:
+      $ref: "../schema/event.schema.json"
+    Error:
+      type: object
+      properties:
+        error: { type: string }
+        details:
+          type: object
+          additionalProperties: true

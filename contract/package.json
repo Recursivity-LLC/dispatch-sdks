@@ -1,0 +1,27 @@
+{
+  "name": "@dispatch/contract",
+  "version": "1.0.0-alpha.0",
+  "description": "The Dispatch wire contract: OpenAPI, JSON Schemas, and golden fixtures every Dispatch SDK must satisfy.",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "openapi",
+    "schema",
+    "fixtures",
+    "index.js",
+    "index.d.ts"
+  ],
+  "exports": {
+    "./schema/event": "./schema/event.schema.json",
+    "./schema/ticket": "./schema/ticket.schema.json",
+    "./openapi": "./openapi/tickets.yaml",
+    "./fixtures/*": "./fixtures/*"
+  },
+  "scripts": {
+    "validate": "node scripts/validate.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.0",
+    "ajv-formats": "^3.0.1"
+  }
+}

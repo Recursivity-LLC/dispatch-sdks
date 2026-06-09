@@ -1,0 +1,139 @@
+{
+  "event_id": "00000000000000000000000000000000",
+  "timestamp": 1700000000.0,
+  "platform": "ruby",
+  "level": "error",
+  "environment": "production",
+  "release": "9f8c2a1d",
+  "server_name": "web.1.dispatch.internal",
+  "transaction": "orders#update",
+  "exception": {
+    "values": [
+      {
+        "type": "RuntimeError",
+        "value": "upstream reservation timed out",
+        "mechanism": {
+          "type": "generic",
+          "handled": false
+        },
+        "stacktrace": {
+          "frames": [
+            {
+              "abs_path": "/srv/app/lib/inventory.rb",
+              "filename": "lib/inventory.rb",
+              "function": "reserve!",
+              "lineno": 6,
+              "in_app": true,
+              "pre_context": [
+                "module Inventory",
+                "  def self.reserve!(order)",
+                "    client = UpstreamClient.new",
+                "    client.post(\"/reserve\", order_id: order.id)",
+                "  rescue Net::ReadTimeout"
+              ],
+              "context_line": "    raise \"upstream reservation timed out\"",
+              "post_context": [
+                "  end",
+                "end"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "StandardError",
+        "value": "Inventory.reserve! failed",
+        "mechanism": {
+          "type": "generic",
+          "handled": false
+        },
+        "stacktrace": {
+          "frames": [
+            {
+              "abs_path": "/srv/app/app/services/order_updater.rb",
+              "filename": "app/services/order_updater.rb",
+              "function": "call",
+              "lineno": 8,
+              "in_app": true,
+              "pre_context": [
+                "    @order = order",
+                "  end",
+                "",
+                "  def call(attrs)",
+                "    @order.assign_attributes(attrs)"
+              ],
+              "context_line": "    Inventory.reserve!(@order)",
+              "post_context": [
+                "    @order.save!",
+                "  end",
+                "end"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "type": "StandardError",
+        "value": "OrderUpdater#call aborted",
+        "mechanism": {
+          "type": "generic",
+          "handled": false
+        },
+        "stacktrace": {
+          "frames": [
+            {
+              "abs_path": "/srv/app/app/controllers/orders_controller.rb",
+              "filename": "app/controllers/orders_controller.rb",
+              "function": "update",
+              "lineno": 7,
+              "in_app": true,
+              "pre_context": [
+                "  before_action :authenticate_user!",
+                "",
+                "  def update",
+                "    @order = Order.find(params[:id])",
+                "    authorize @order"
+              ],
+              "context_line": "    OrderUpdater.new(@order).call(order_params)",
+              "post_context": [
+                "    redirect_to @order, notice: \"Saved\"",
+                "  end",
+                "",
+                "  private",
+                ""
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "request": {
+    "url": "https://shop.example.com/orders/42",
+    "method": "POST",
+    "query_string": "ref=email",
+    "headers": {
+      "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Chrome/124.0",
+      "Referer": "https://shop.example.com/orders",
+      "Accept": "text/html",
+      "Host": "shop.example.com",
+      "X-Request-Id": "5e2c1b90-7a44-4f0b-9e21-0c1d2e3f4a5b"
+    },
+    "env": {
+      "REMOTE_ADDR": "203.0.113.7"
+    }
+  },
+  "user": {
+    "id": "u_99",
+    "email": "casey@example.com",
+    "ip_address": "203.0.113.7"
+  },
+  "tags": {
+    "request_id": "5e2c1b90-7a44-4f0b-9e21-0c1d2e3f4a5b",
+    "transaction": "orders#update"
+  },
+  "sdk": {
+    "name": "dispatch-rails",
+    "version": "0.6.0"
+  }
+}

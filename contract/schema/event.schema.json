@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dispatchit.app/contract/v1/event.schema.json",
+  "title": "Dispatch error event",
+  "description": "The Sentry-compatible event posted to the Dispatch error-ingest endpoint (POST {error_endpoint}, default /api/v1/store). This is the canonical shape every Dispatch SDK must produce. Derived from the dispatch-rails reference producer (EventBuilder). Server SDKs (ruby/python/node/...) and the browser SDK (javascript) both validate against this schema; fields that only one surface emits are marked below.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["event_id", "timestamp", "platform", "level", "environment", "exception"],
+  "properties": {
+    "event_id": {
+      "description": "UUID v4 with the hyphens removed (32 lowercase hex chars).",
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "timestamp": {
+      "description": "Seconds since the Unix epoch, as a float (e.g. Time.now.to_f / Date.now()/1000).",
+      "type": "number"
+    },
+    "platform": {
+      "description": "Originating runtime. Drives in_app heuristics and dashboard grouping.",
+      "type": "string",
+      "examples": ["ruby", "javascript", "python", "php", "java", "go", "csharp", "swift", "kotlin", "rust"]
+    },
+    "level": {
+      "type": "string",
+      "enum": ["fatal", "error", "warning", "info", "debug"]
+    },
+    "environment": {
+      "type": "string",
+      "description": "Resolved environment (config.environment, else the framework env). Never null."
+    },
+    "release": {
+      "type": ["string", "null"],
+      "description": "Release identifier, e.g. a git SHA. Optional."
+    },
+    "server_name": {
+      "type": ["string", "null"],
+      "description": "Hostname of the reporting server. Server SDKs only; omitted in the browser."
+    },
+    "transaction": {
+      "type": ["string", "null"],
+      "description": "The request handler, 'controller#action' style. Omitted for background/job errors and in the browser."
+    },
+    "exception": {
+      "type": "object",
+      "required": ["values"],
+      "additionalProperties": false,
+      "properties": {
+        "values": {
+          "description": "The exception and its cause chain, OLDEST CAUSE FIRST, the raised exception LAST (Sentry ordering). Capped at MAX_CAUSES.",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 5,
+          "items": { "$ref": "#/$defs/exceptionValue" }
+        }
+      }
+    },
+    "request": { "$ref": "#/$defs/request" },
+    "user": { "$ref": "#/$defs/user" },
+    "tags": {
+      "type": "object",
+      "description": "Flat string→string map. Derived keys (request_id, transaction) plus the host app's tags; explicit tags win on conflict.",
+      "additionalProperties": { "type": ["string", "number", "boolean", "null"] }
+    },
+    "sdk": {
+      "type": "object",
+      "description": "Identifies the producing SDK. Server SDKs set this; the browser tracker omits it (the X-Dispatch-Sdk header carries it instead).",
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" }
+      }
+    },
+    "breadcrumbs": {
+      "type": "object",
+      "description": "Browser SDK only. A ring buffer of recent UI/console/navigation events leading up to the error.",
+      "required": ["values"],
+      "properties": {
+        "values": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/breadcrumb" }
+        }
+      }
+    },
+    "user_path": {
+      "type": "array",
+      "description": "Browser SDK only. The last few click labels, oldest→newest — a concise path to the error.",
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "exceptionValue": {
+      "type": "object",
+      "required": ["type", "value", "mechanism", "stacktrace"],
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Exception class name (e.g. 'ActiveRecord::RecordNotFound', 'TypeError')."
+        },
+        "value": {
+          "type": "string",
+          "description": "Exception message, truncated to 2000 chars.",
+          "maxLength": 2000
+        },
+        "mechanism": {
+          "type": "object",
+          "required": ["type", "handled"],
+          "properties": {
+            "type": {
+              "type": "string",
+              "description": "How it was captured. 'generic' (server), 'onerror'/'onunhandledrejection' (browser).",
+              "examples": ["generic", "onerror", "onunhandledrejection"]
+            },
+            "handled": {
+              "type": "boolean",
+              "description": "false for unhandled (middleware/global handler) captures, true for manual capture_exception."
+            }
+          }
+        },
+        "stacktrace": {
+          "type": "object",
+          "required": ["frames"],
+          "additionalProperties": false,
+          "properties": {
+            "frames": {
+              "type": "array",
+              "description": "Frames OLDEST FIRST, the failing frame LAST (Sentry ordering). Capped at MAX_FRAMES.",
+              "maxItems": 100,
+              "items": { "$ref": "#/$defs/frame" }
+            }
+          }
+        }
+      }
+    },
+    "frame": {
+      "type": "object",
+      "required": ["function", "lineno"],
+      "additionalProperties": false,
+      "properties": {
+        "abs_path": { "type": ["string", "null"], "description": "Absolute path / URL of the source." },
+        "filename": { "type": ["string", "null"], "description": "Path relative to the project root." },
+        "function": { "type": ["string", "null"] },
+        "lineno": { "type": "integer" },
+        "colno": { "type": ["integer", "null"], "description": "Column. Browser SDK provides this; server SDKs typically omit it." },
+        "in_app": {
+          "type": "boolean",
+          "description": "True when the frame is the app's own code (not a dependency/stdlib). Per-language heuristic: ruby excludes /gems//vendor//ruby/; js excludes node_modules; python excludes site-packages/stdlib."
+        },
+        "pre_context": {
+          "type": "array",
+          "description": "Up to CONTEXT_LINES source lines before context_line. Added to in-app frames (server SDKs with filesystem access). Limited to MAX_CONTEXT_FRAMES frames per event.",
+          "items": { "type": "string" }
+        },
+        "context_line": { "type": "string", "description": "The source line at lineno." },
+        "post_context": {
+          "type": "array",
+          "description": "Up to CONTEXT_LINES source lines after context_line.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "url": { "type": ["string", "null"] },
+        "method": { "type": ["string", "null"] },
+        "query_string": { "type": ["string", "null"] },
+        "headers": {
+          "type": "object",
+          "description": "Allow-listed headers only (User-Agent, Referer, Accept, Content-Type, Host, X-Request-Id).",
+          "additionalProperties": { "type": "string" }
+        },
+        "data": {
+          "description": "Opt-in (send_default_params). Filtered request params, or {\"_truncated\": true} when over MAX_PARAMS_BYTES.",
+          "type": ["object", "null"]
+        },
+        "env": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "user": {
+      "type": ["object", "null"],
+      "additionalProperties": true,
+      "properties": {
+        "id": { "type": ["string", "null"] },
+        "email": { "type": ["string", "null"] },
+        "ip_address": { "type": ["string", "null"] }
+      }
+    },
+    "breadcrumb": {
+      "type": "object",
+      "properties": {
+        "timestamp": { "type": "number" },
+        "category": { "type": "string", "examples": ["ui.click", "console", "navigation"] },
+        "level": { "type": "string" },
+        "message": { "type": "string" }
+      }
+    }
+  }
+}

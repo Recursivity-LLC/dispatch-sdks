@@ -1,0 +1,29 @@
+name: contract
+
+# The Phase 0 gate: the wire contract must always be internally consistent — every golden
+# fixture validates against the JSON Schemas. SDK-specific workflows (js.yml, python.yml)
+# land with their packages and additionally diff freshly-produced events against the goldens.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - "contract/**"
+      - ".github/workflows/contract.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile=false
+      - name: Validate fixtures against schemas
+        run: pnpm --filter @dispatch/contract validate
