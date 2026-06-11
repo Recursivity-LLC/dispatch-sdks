@@ -1,4 +1,4 @@
-// @dispatch/fastify — a Fastify onError hook.
+// @dispatchitapp/fastify — a Fastify onError hook.
 //
 // The onError hook OBSERVES errors thrown in the request lifecycle (it does not replace
 // Fastify's error handler or change the reply), captures them with handled:false + route
@@ -12,7 +12,7 @@ import {
   extractRequest,
   getClient,
   normalizeUser,
-} from "@dispatch/node";
+} from "@dispatchitapp/node";
 
 // Structural subset of a Fastify request — no Fastify types required.
 export interface FastifyRequestLike extends HttpRequestLike {

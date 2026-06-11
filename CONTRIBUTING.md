@@ -10,8 +10,8 @@ wire format moved and every SDK must follow.
 ## Repo shape
 
 - `contract/` — OpenAPI, JSON Schemas, golden fixtures, the validator.
-- `packages/` — JS/TS packages (pnpm workspace), published under `@dispatch/*`.
-- `python/` — the Python SDK (`dispatch-sdk` on PyPI).
+- `packages/` — JS/TS packages (pnpm workspace), published under `@dispatchitapp/*`.
+- `python/` — the Python SDK (`dispatchitapp` on PyPI).
 - `conformance/` — the cross-language gate.
 
 The Ruby gem is **not** here — it lives in the product repo and is the reference producer.
@@ -21,19 +21,19 @@ The Ruby gem is **not** here — it lives in the product repo and is the referen
 We build this out in phases (see the design doc in the product repo). Current status:
 
 - **Phase 0 — contract** ✅ schemas, fixtures, validator, regeneration script.
-- **Phase 1 — core + minimal client** ✅ `@dispatch/core` (TS) and `dispatch-sdk` (Python):
+- **Phase 1 — core + minimal client** ✅ `@dispatchitapp/core` (TS) and `dispatchitapp` (Python):
   config, event builder, sampling, dedup, `before_send`, `report()`, manual capture, bounded
   transport. Both validate their output against the contract schemas.
-- **Phase 2 — auto-capture + runtime hooks** ✅ `@dispatch/node` (process global handlers + V8
+- **Phase 2 — auto-capture + runtime hooks** ✅ `@dispatchitapp/node` (process global handlers + V8
   stack frames with `fs` source context); Python `integrations.logging.DispatchHandler` +
   `integrations.celery.install` (the Rails.error analogues).
-- **Phase 3 — framework middleware** ✅ Node `@dispatch/express` (4-arg error handler) +
-  `@dispatch/fastify` (onError hook); Python `integrations/{wsgi,asgi,django,flask,fastapi}` —
+- **Phase 3 — framework middleware** ✅ Node `@dispatchitapp/express` (4-arg error handler) +
+  `@dispatchitapp/fastify` (onError hook); Python `integrations/{wsgi,asgi,django,flask,fastapi}` —
   all innermost, capture-and-re-raise with request/route/user context.
-- **Phase 4 — browser error tracker** ✅ `@dispatch/browser`: real cross-browser stack parser,
+- **Phase 4 — browser error tracker** ✅ `@dispatchitapp/browser`: real cross-browser stack parser,
   breadcrumbs + `user_path`, fetch-keepalive→sendBeacon (`?sentry_key=` fallback), window
   error/unhandledrejection handlers, and a self-contained IIFE `<script>` drop-in.
-- **Phase 5 — feedback widget** ✅ `@dispatch/browser/widget`: the `_widget.html.erb` DOM
+- **Phase 5 — feedback widget** ✅ `@dispatchitapp/browser/widget`: the `_widget.html.erb` DOM
   rebuilt in framework-free JS (floating 💬 button, modal, screenshot picker/drag/paste→base64,
   toast), a separate entry + IIFE drop-in, reusing the transport. Matches `ticket.widget.json`.
 - **Later** — thin React/Vue wrappers; hardening (browser source maps, structured error
@@ -59,5 +59,5 @@ version in `X-Dispatch-Sdk` (e.g. `dispatch-node/1.2.0 (contract/1)`).
 
 ```bash
 pnpm install
-pnpm --filter @dispatch/contract validate   # schema-validate the fixtures
+pnpm --filter @dispatchitapp/contract validate   # schema-validate the fixtures
 ```

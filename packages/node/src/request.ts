@@ -1,4 +1,4 @@
-import type { DispatchRequest, DispatchUser } from "@dispatch/core";
+import type { DispatchRequest, DispatchUser } from "@dispatchitapp/core";
 
 // The header allow-list, lowercased (Node lowercases header keys) → canonical wire name.
 // Same set as the gem's EventBuilder::SAFE_HEADERS.

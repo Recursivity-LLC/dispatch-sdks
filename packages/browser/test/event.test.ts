@@ -1,4 +1,4 @@
-import { resolveConfig } from "@dispatch/core";
+import { resolveConfig } from "@dispatchitapp/core";
 import { describe, expect, it } from "vitest";
 import { buildBrowserEvent } from "../src/event";
 

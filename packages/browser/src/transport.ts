@@ -5,7 +5,7 @@ import {
   type TicketResponse,
   type Transport,
   sdkHeader,
-} from "@dispatch/core";
+} from "@dispatchitapp/core";
 
 // Browser transport: send each event immediately via fetch with keepalive (survives page
 // unload), falling back to navigator.sendBeacon when fetch is unavailable or fails. Beacons

@@ -1,0 +1,45 @@
+name: release-python
+
+# Builds and publishes the `dispatchitapp` Python package to PyPI. The version published is
+# whatever is in python/dispatchitapp/pyproject.toml — bump it first, then either push a
+# `py-vX.Y.Z` tag or run this workflow manually from the Actions tab.
+#
+# Auth: PyPI Trusted Publishing (OIDC) — no API token. Configure a trusted publisher on
+# PyPI for this repo + workflow + the `pypi` environment (use a "pending publisher" for the
+# very first release, before the project exists). See RELEASING.md.
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "py-v*"
+
+permissions:
+  contents: read
+  id-token: write # PyPI Trusted Publishing (OIDC)
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: pypi
+    defaults:
+      run:
+        working-directory: python/dispatchitapp
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install (with all framework extras so the full suite runs)
+        run: |
+          python -m pip install --upgrade pip build
+          pip install -e ".[dev,django,flask,fastapi,celery]"
+      - name: Test
+        run: pytest
+      - name: Build sdist + wheel
+        run: python -m build
+      - name: Publish to PyPI (Trusted Publishing)
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          # packages-dir is resolved from the repo root, not the job working-directory.
+          packages-dir: python/dispatchitapp/dist

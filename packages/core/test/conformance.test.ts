@@ -1,4 +1,4 @@
-// Ties @dispatch/core to the wire contract: events and tickets the core produces must validate
+// Ties @dispatchitapp/core to the wire contract: events and tickets the core produces must validate
 // against contract/schema/*.json. If this fails, core has drifted from the contract.
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";

@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import type { DispatchFrame } from "@dispatch/core";
+import type { DispatchFrame } from "@dispatchitapp/core";
 
 export const CONTEXT_LINES = 5;
 export const MAX_CONTEXT_FRAMES = 12;

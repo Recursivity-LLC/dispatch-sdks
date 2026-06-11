@@ -1,0 +1,45 @@
+name: release-js
+
+# Publishes the JS/TS SDK packages (@dispatchitapp/core, @dispatchitapp/node, @dispatchitapp/browser,
+# @dispatchitapp/express, @dispatchitapp/fastify) to npm. The version published is whatever is in
+# each package.json — bump those first, then either push a `js-vX.Y.Z` tag or run this
+# workflow manually from the Actions tab.
+#
+# Auth: an npm granular automation token in the NPM_TOKEN secret.
+# Provenance: published with --provenance via OIDC (requires id-token: write).
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "js-v*"
+
+permissions:
+  contents: read
+  id-token: write # npm provenance attestation (OIDC)
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    # Optional but recommended: gate publishing behind a protected GitHub Environment.
+    environment: release
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4 # version comes from package.json "packageManager"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      - run: pnpm install --frozen-lockfile=false
+      - name: Build
+        run: pnpm --filter "./packages/*" build
+      - name: Test
+        run: pnpm --filter "./packages/*" test
+      # pnpm publishes in topological order and rewrites `workspace:*` deps to the real
+      # version range. Already-published versions fail loudly (bump before re-running).
+      - name: Publish to npm
+        run: pnpm --filter "./packages/*" publish --access public --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: "true"

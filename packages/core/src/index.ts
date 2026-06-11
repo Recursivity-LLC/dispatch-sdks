@@ -1,8 +1,8 @@
-// @dispatch/core — the framework-agnostic core of the Dispatch SDKs.
+// @dispatchitapp/core — the framework-agnostic core of the Dispatch SDKs.
 //
 // On its own this is a usable minimal SDK (manual capture + report()) anywhere a global
-// `fetch` exists (Node 18+, browsers). Runtime packages layer on top: @dispatch/node adds
-// source context, global handlers and flush-on-exit; @dispatch/browser adds the error tracker
+// `fetch` exists (Node 18+, browsers). Runtime packages layer on top: @dispatchitapp/node adds
+// source context, global handlers and flush-on-exit; @dispatchitapp/browser adds the error tracker
 // and the feedback widget; framework adapters add middleware.
 
 import { Client, type ClientOptions, type CaptureContext } from "./client";

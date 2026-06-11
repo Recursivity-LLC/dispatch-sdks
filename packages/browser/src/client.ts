@@ -12,7 +12,7 @@ import {
   markCaptured,
   resolveConfig,
   sampledOut,
-} from "@dispatch/core";
+} from "@dispatchitapp/core";
 import { type Breadcrumb, BreadcrumbBuffer } from "./breadcrumbs";
 import { buildBrowserEvent } from "./event";
 import { type HandlerHost, installBrowserHandlers } from "./handlers";

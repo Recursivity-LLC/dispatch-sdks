@@ -6,7 +6,7 @@ import type {
   DispatchUser,
   Level,
   Tags,
-} from "@dispatch/core";
+} from "@dispatchitapp/core";
 import type { Breadcrumb } from "./breadcrumbs";
 import { parseStack } from "./stack";
 

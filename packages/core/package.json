@@ -1,8 +1,21 @@
 {
-  "name": "@dispatch/core",
-  "version": "1.0.0-alpha.0",
+  "name": "@dispatchitapp/core",
+  "version": "1.0.0",
   "description": "Framework-agnostic core for the Dispatch SDKs: config, event builder, sampling, dedup, before_send, ticket client, bounded transport.",
   "license": "MIT",
+  "author": "Dispatch Team <hello@dispatchit.app>",
+  "homepage": "https://dispatchit.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Recursivity-LLC/dispatch-sdks.git",
+    "directory": "packages/core"
+  },
+  "bugs": "https://github.com/Recursivity-LLC/dispatch-sdks/issues",
+  "keywords": ["error-tracking", "bug-report", "monitoring", "dispatch", "sentry"],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",

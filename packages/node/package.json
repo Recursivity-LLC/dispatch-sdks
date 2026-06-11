@@ -1,8 +1,21 @@
 {
-  "name": "@dispatch/node",
-  "version": "1.0.0-alpha.0",
-  "description": "Node.js server SDK for Dispatch: global error handlers, V8 stack frames with source context, on top of @dispatch/core.",
+  "name": "@dispatchitapp/node",
+  "version": "1.0.0",
+  "description": "Node.js server SDK for Dispatch: global error handlers, V8 stack frames with source context, on top of @dispatchitapp/core.",
   "license": "MIT",
+  "author": "Dispatch Team <hello@dispatchit.app>",
+  "homepage": "https://dispatchit.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Recursivity-LLC/dispatch-sdks.git",
+    "directory": "packages/node"
+  },
+  "bugs": "https://github.com/Recursivity-LLC/dispatch-sdks/issues",
+  "keywords": ["error-tracking", "monitoring", "dispatch", "nodejs", "sentry"],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -23,7 +36,7 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@dispatch/core": "workspace:*"
+    "@dispatchitapp/core": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^20.14.0",

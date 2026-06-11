@@ -7,5 +7,5 @@ export default defineConfig({
   clean: true,
   sourcemap: true,
   target: "node18",
-  external: ["@dispatch/node", "@dispatch/core"],
+  external: ["@dispatchitapp/node", "@dispatchitapp/core"],
 });

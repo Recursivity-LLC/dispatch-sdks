@@ -1,7 +1,7 @@
 // Validates every golden fixture against the JSON Schemas. This is the cheapest
 // conformance gate: if a fixture (or, in an SDK's tests, a freshly-produced event)
 // doesn't satisfy the schema, the wire contract has drifted. Run: `pnpm --filter
-// @dispatch/contract validate` (after `pnpm install`).
+// @dispatchitapp/contract validate` (after `pnpm install`).
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import { readFileSync, readdirSync } from "node:fs";

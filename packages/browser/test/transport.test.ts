@@ -1,7 +1,7 @@
-import { resolveConfig } from "@dispatch/core";
+import { resolveConfig } from "@dispatchitapp/core";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { BrowserTransport } from "../src/transport";
-import type { DispatchEvent } from "@dispatch/core";
+import type { DispatchEvent } from "@dispatchitapp/core";
 
 const config = resolveConfig({
   apiKey: "dsp_live_secret",

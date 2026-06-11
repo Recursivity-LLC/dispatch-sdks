@@ -1,4 +1,4 @@
-import type { Client } from "@dispatch/core";
+import type { Client } from "@dispatchitapp/core";
 
 type Listener = (...args: unknown[]) => void;
 

@@ -77,7 +77,7 @@ Normalize these before comparing (the fixtures already carry fixed sentinels for
 - **Assert on:** field **names**, **nesting**, **ordering** (cause + frame order), `in_app` flags,
   `mechanism`, the limits, and `platform`.
 
-> Note on `mechanism.type`: `@dispatch/browser` distinguishes `"onerror"` (window.onerror) from
+> Note on `mechanism.type`: `@dispatchitapp/browser` distinguishes `"onerror"` (window.onerror) from
 > `"onunhandledrejection"` (unhandled promise rejections), and `event.js-unhandledrejection.json`
 > reflects that. The gem's older bundled `error_tracker.js` emits `"onerror"` for both — the
 > schema permits any mechanism type, so both interoperate.
@@ -99,7 +99,7 @@ and every SDK must follow.
 
 ```bash
 pnpm install
-pnpm --filter @dispatch/contract validate
+pnpm --filter @dispatchitapp/contract validate
 ```
 
 In each SDK, validate freshly-produced payloads against these schemas (`ajv` in JS,

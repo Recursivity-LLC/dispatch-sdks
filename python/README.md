@@ -1,14 +1,14 @@
 # python/
 
-The Python SDK — `dispatch-sdk` on PyPI. A single distribution with framework **extras**
-(`pip install dispatch-sdk[django]`), not a constellation of packages.
+The Python SDK — `dispatchitapp` on PyPI. A single distribution with framework **extras**
+(`pip install dispatchitapp[django]`), not a constellation of packages.
 
 Landing in **Phase 1+** (server-side first, per the approved plan):
 
 ```
-python/dispatch-sdk/
+python/dispatchitapp/
   pyproject.toml            # hatchling; extras: django / flask / fastapi / celery
-  src/dispatch_sdk/
+  src/dispatchitapp/
     __init__.py             # init(), capture_exception(), report()
     config.py event.py types.py sampling.py dedup.py reporter.py
     stacktrace.py           # traceback module → frames (in_app excludes site-packages/stdlib)

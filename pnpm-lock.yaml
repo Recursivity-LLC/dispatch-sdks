@@ -25,7 +25,7 @@ importers:
 
   packages/browser:
     dependencies:
-      '@dispatch/core':
+      '@dispatchitapp/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
@@ -74,11 +74,11 @@ importers:
 
   packages/express:
     dependencies:
-      '@dispatch/node':
+      '@dispatchitapp/node':
         specifier: workspace:*
         version: link:../node
     devDependencies:
-      '@dispatch/core':
+      '@dispatchitapp/core':
         specifier: workspace:*
         version: link:../core
       '@types/node':
@@ -96,11 +96,11 @@ importers:
 
   packages/fastify:
     dependencies:
-      '@dispatch/node':
+      '@dispatchitapp/node':
         specifier: workspace:*
         version: link:../node
     devDependencies:
-      '@dispatch/core':
+      '@dispatchitapp/core':
         specifier: workspace:*
         version: link:../core
       '@types/node':
@@ -118,7 +118,7 @@ importers:
 
   packages/node:
     dependencies:
-      '@dispatch/core':
+      '@dispatchitapp/core':
         specifier: workspace:*
         version: link:../core
     devDependencies:
