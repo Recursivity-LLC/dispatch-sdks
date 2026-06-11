@@ -1,7 +1,7 @@
-# @dispatch/node
+# @dispatchitapp/node
 
 The Node.js server SDK for [Dispatch](https://dispatchit.app). Builds on
-[`@dispatch/core`](../core), adding the two things a server needs that the core can't do
+[`@dispatchitapp/core`](../core), adding the two things a server needs that the core can't do
 portably:
 
 - **V8 stack frames with source context** — in-app frames carry the lines around the failing
@@ -10,7 +10,7 @@ portably:
   runtime-level analogue of the gem's Rack middleware + `Rails.error` subscriber.
 
 ```ts
-import { init, captureException, report } from "@dispatch/node";
+import { init, captureException, report } from "@dispatchitapp/node";
 
 init({
   apiKey: process.env.DISPATCH_API_KEY!,
@@ -26,9 +26,9 @@ try {
 }
 ```
 
-Framework middleware (Express, Fastify) lands in `@dispatch/express` / `@dispatch/fastify` and
-builds on this package. Everything from `@dispatch/core` is re-exported here, so a Node app
-imports solely from `@dispatch/node`.
+Framework middleware (Express, Fastify) lands in `@dispatchitapp/express` / `@dispatchitapp/fastify` and
+builds on this package. Everything from `@dispatchitapp/core` is re-exported here, so a Node app
+imports solely from `@dispatchitapp/node`.
 
 ## Notes
 

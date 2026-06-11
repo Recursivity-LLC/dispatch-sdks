@@ -7,6 +7,6 @@ export default defineConfig({
   clean: true,
   sourcemap: true,
   target: "node18",
-  // @dispatch/core is a runtime dependency, not bundled in.
-  external: ["@dispatch/core"],
+  // @dispatchitapp/core is a runtime dependency, not bundled in.
+  external: ["@dispatchitapp/core"],
 });

@@ -1,4 +1,4 @@
-// @dispatch/browser — the browser error tracker.
+// @dispatchitapp/browser — the browser error tracker.
 //
 // Captures uncaught errors + unhandled promise rejections (Sentry-shaped, platform
 // "javascript"), with breadcrumbs and the user_path, and ships them via fetch-keepalive /
@@ -54,4 +54,4 @@ export { buildBrowserEvent, type BrowserEvent } from "./event";
 export { BrowserTransport } from "./transport";
 export { installBrowserHandlers, type HandlerHost, type InstallTargets } from "./handlers";
 export { SDK_NAME, SDK_VERSION } from "./version";
-export type { DispatchEvent, DispatchOptions, DispatchUser, Level, Tags, Transport } from "@dispatch/core";
+export type { DispatchEvent, DispatchOptions, DispatchUser, Level, Tags, Transport } from "@dispatchitapp/core";

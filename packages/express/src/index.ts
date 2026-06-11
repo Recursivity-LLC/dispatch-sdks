@@ -1,4 +1,4 @@
-// @dispatch/express — Express error-handler middleware.
+// @dispatchitapp/express — Express error-handler middleware.
 //
 // Register it LAST (after your routes and any other error handlers) so it sees unhandled route
 // errors with full request context, captures them (handled:false), and then re-propagates via
@@ -12,7 +12,7 @@ import {
   extractRequest,
   getClient,
   normalizeUser,
-} from "@dispatch/node";
+} from "@dispatchitapp/node";
 
 // Structural subset of an Express request — we depend on no Express types.
 export interface ExpressRequestLike extends HttpRequestLike {

@@ -14,8 +14,8 @@
     "test": "pnpm -r test",
     "lint": "pnpm -r lint",
     "typecheck": "pnpm -r typecheck",
-    "conformance": "pnpm --filter @dispatch/conformance test",
-    "contract:validate": "pnpm --filter @dispatch/contract validate"
+    "conformance": "pnpm --filter @dispatchitapp/conformance test",
+    "contract:validate": "pnpm --filter @dispatchitapp/contract validate"
   },
   "devDependencies": {
     "typescript": "^5.5.0"

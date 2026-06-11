@@ -1,8 +1,21 @@
 {
-  "name": "@dispatch/fastify",
-  "version": "1.0.0-alpha.0",
+  "name": "@dispatchitapp/fastify",
+  "version": "1.0.0",
   "description": "Fastify onError hook for Dispatch — auto-captures unhandled request errors with route context.",
   "license": "MIT",
+  "author": "Dispatch Team <hello@dispatchit.app>",
+  "homepage": "https://dispatchit.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Recursivity-LLC/dispatch-sdks.git",
+    "directory": "packages/fastify"
+  },
+  "bugs": "https://github.com/Recursivity-LLC/dispatch-sdks/issues",
+  "keywords": ["error-tracking", "fastify", "plugin", "dispatch", "monitoring"],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -23,10 +36,10 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@dispatch/node": "workspace:*"
+    "@dispatchitapp/node": "workspace:*"
   },
   "devDependencies": {
-    "@dispatch/core": "workspace:*",
+    "@dispatchitapp/core": "workspace:*",
     "@types/node": "^20.14.0",
     "tsup": "^8.0.0",
     "typescript": "^5.5.0",

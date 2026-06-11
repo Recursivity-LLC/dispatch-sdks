@@ -4,7 +4,7 @@ import {
   type TicketPayload,
   type TicketResponse,
   type Transport,
-} from "@dispatch/core";
+} from "@dispatchitapp/core";
 import { describe, expect, it } from "vitest";
 import { errorHandler, type ExpressRequestLike } from "../src/index";
 

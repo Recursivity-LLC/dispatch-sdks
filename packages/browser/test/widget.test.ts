@@ -1,4 +1,4 @@
-import type { TicketPayload, TicketResponse } from "@dispatch/core";
+import type { TicketPayload, TicketResponse } from "@dispatchitapp/core";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { Widget, type WidgetOptions } from "../src/widget/Widget";
 

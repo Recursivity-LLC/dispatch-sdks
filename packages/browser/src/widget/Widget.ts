@@ -3,7 +3,7 @@ import {
   type TicketPayload,
   type TicketResponse,
   resolveConfig,
-} from "@dispatch/core";
+} from "@dispatchitapp/core";
 import { describeClickTarget } from "../breadcrumbs";
 import { BrowserTransport } from "../transport";
 import { type WidgetRefs, buildWidgetDom } from "./render";

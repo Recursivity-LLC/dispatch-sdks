@@ -1,5 +1,5 @@
 {
-  "name": "@dispatch/conformance",
+  "name": "@dispatchitapp/conformance",
   "version": "0.0.0",
   "private": true,
   "description": "Cross-language conformance runner: every SDK's produced events are normalized and diffed against the golden fixtures.",

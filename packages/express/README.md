@@ -1,12 +1,12 @@
-# @dispatch/express
+# @dispatchitapp/express
 
 Express error-handler middleware for [Dispatch](https://dispatchit.app). Auto-captures
 unhandled route errors with request context, then re-propagates — it never swallows the error.
 
 ```ts
 import express from "express";
-import { init } from "@dispatch/node";
-import { errorHandler } from "@dispatch/express";
+import { init } from "@dispatchitapp/node";
+import { errorHandler } from "@dispatchitapp/express";
 
 init({ apiKey: process.env.DISPATCH_API_KEY!, environment: process.env.NODE_ENV });
 
@@ -25,5 +25,5 @@ pattern, low cardinality), and the resolved user. The error then continues to Ex
 handler (or yours), so behaviour is unchanged.
 
 Options: `client` (defaults to the `init()` client), `user(req)`, `shouldHandle(err, req)`.
-Pairs with [`@dispatch/node`](../node)'s global handlers, which catch anything that escapes the
+Pairs with [`@dispatchitapp/node`](../node)'s global handlers, which catch anything that escapes the
 request lifecycle.

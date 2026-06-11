@@ -1,4 +1,4 @@
-# @dispatch/browser
+# @dispatchitapp/browser
 
 The browser error tracker for [Dispatch](https://dispatchit.app). Captures uncaught errors and
 unhandled promise rejections (Sentry-shaped, `platform: "javascript"`) with breadcrumbs and the
@@ -9,7 +9,7 @@ can include error tracking without the modal DOM.
 ## ESM / bundler
 
 ```ts
-import { init } from "@dispatch/browser";
+import { init } from "@dispatchitapp/browser";
 
 init({
   apiKey: "dsp_live_...",
@@ -47,12 +47,12 @@ Output validates against `../../contract/schema/event.schema.json` (`test/index.
 
 ## Feedback widget
 
-A separate entry, `@dispatch/browser/widget`, renders the floating 💬 button + modal where a
+A separate entry, `@dispatchitapp/browser/widget`, renders the floating 💬 button + modal where a
 user reports a bug, requests a feature, or suggests a change (a framework-free rebuild of the
 gem's widget). Import it independently so a page can ship the widget, the error tracker, or both:
 
 ```ts
-import { initWidget } from "@dispatch/browser/widget";
+import { initWidget } from "@dispatchitapp/browser/widget";
 
 initWidget({
   apiKey: "dsp_live_...",

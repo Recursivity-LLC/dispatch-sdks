@@ -1,6 +1,6 @@
-import type { TicketPayload } from "@dispatch/core";
+import type { TicketPayload } from "@dispatchitapp/core";
 
-export const WIDGET_VERSION = "1.0.0-alpha.0";
+export const WIDGET_VERSION = "1.0.0";
 
 export interface WidgetScreenshot {
   filename: string;

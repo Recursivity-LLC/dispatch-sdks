@@ -1,5 +1,5 @@
 {
-  "name": "@dispatch/contract",
+  "name": "@dispatchitapp/contract",
   "version": "1.0.0-alpha.0",
   "description": "The Dispatch wire contract: OpenAPI, JSON Schemas, and golden fixtures every Dispatch SDK must satisfy.",
   "license": "MIT",

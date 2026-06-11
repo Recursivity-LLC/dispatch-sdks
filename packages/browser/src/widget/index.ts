@@ -1,8 +1,8 @@
-// @dispatch/browser/widget — the floating feedback widget.
+// @dispatchitapp/browser/widget — the floating feedback widget.
 //
 // A separate entry from the error tracker so a page can include one without the other.
 //
-//   import { initWidget } from "@dispatch/browser/widget";
+//   import { initWidget } from "@dispatchitapp/browser/widget";
 //   initWidget({
 //     apiKey: "dsp_live_...",
 //     endpoint: "https://acme.dispatchit.app/api/v1/tickets",

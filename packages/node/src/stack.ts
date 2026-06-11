@@ -1,6 +1,6 @@
 import { isAbsolute, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
-import { parseStack as coreParseStack, type DispatchFrame } from "@dispatch/core";
+import { parseStack as coreParseStack, type DispatchFrame } from "@dispatchitapp/core";
 import { addSourceContext } from "./sourceContext";
 
 function underRoot(absPath: string, root: string): boolean {

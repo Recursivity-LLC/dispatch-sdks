@@ -5,7 +5,7 @@ import {
   type TicketPayload,
   type TicketResponse,
   type Transport,
-} from "@dispatch/core";
+} from "@dispatchitapp/core";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { installGlobalHandlers } from "../src/handlers";
 

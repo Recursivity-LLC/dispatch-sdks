@@ -6,7 +6,7 @@ import {
   type TicketPayload,
   type TicketResponse,
   type Transport,
-} from "@dispatch/core";
+} from "@dispatchitapp/core";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import { describe, expect, it } from "vitest";

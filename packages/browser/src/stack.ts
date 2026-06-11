@@ -1,4 +1,4 @@
-import type { DispatchFrame } from "@dispatch/core";
+import type { DispatchFrame } from "@dispatchitapp/core";
 
 export const MAX_FRAMES = 100;
 

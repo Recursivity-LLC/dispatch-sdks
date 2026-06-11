@@ -1,11 +1,11 @@
-// @dispatch/node — the Node.js server SDK.
+// @dispatchitapp/node — the Node.js server SDK.
 //
-// Adds, on top of @dispatch/core: V8 stack frames with source context (the gem's in-app
+// Adds, on top of @dispatchitapp/core: V8 stack frames with source context (the gem's in-app
 // `pre/context/post_context`), and process-level global error handlers — the runtime-level
 // analogue of the gem's Rack middleware + Rails.error subscriber. Framework middleware
-// (Express/Fastify) builds on this in @dispatch/express / @dispatch/fastify.
+// (Express/Fastify) builds on this in @dispatchitapp/express / @dispatchitapp/fastify.
 
-import { type Client, type ClientOptions, init as coreInit } from "@dispatch/core";
+import { type Client, type ClientOptions, init as coreInit } from "@dispatchitapp/core";
 import { type GlobalHandlerOptions, installGlobalHandlers } from "./handlers";
 import { nodeStackParser } from "./stack";
 import { SDK_NAME, SDK_VERSION } from "./version";
@@ -43,7 +43,7 @@ export { extractRequest, normalizeUser } from "./request";
 export type { HttpRequestLike } from "./request";
 export { SDK_NAME, SDK_VERSION } from "./version";
 
-// Re-export the core runtime API so consumers import everything from @dispatch/node.
+// Re-export the core runtime API so consumers import everything from @dispatchitapp/node.
 export {
   Client,
   captureException,
@@ -55,7 +55,7 @@ export {
   buildTicketPayload,
   parseStack,
   resolveConfig,
-} from "@dispatch/core";
+} from "@dispatchitapp/core";
 export type {
   CaptureContext,
   ClientOptions,
@@ -72,4 +72,4 @@ export type {
   TicketPayload,
   TicketResponse,
   Transport,
-} from "@dispatch/core";
+} from "@dispatchitapp/core";

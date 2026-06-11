@@ -1,8 +1,21 @@
 {
-  "name": "@dispatch/express",
-  "version": "1.0.0-alpha.0",
+  "name": "@dispatchitapp/express",
+  "version": "1.0.0",
   "description": "Express error-handler middleware for Dispatch — auto-captures unhandled route errors with request context.",
   "license": "MIT",
+  "author": "Dispatch Team <hello@dispatchit.app>",
+  "homepage": "https://dispatchit.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Recursivity-LLC/dispatch-sdks.git",
+    "directory": "packages/express"
+  },
+  "bugs": "https://github.com/Recursivity-LLC/dispatch-sdks/issues",
+  "keywords": ["error-tracking", "express", "middleware", "dispatch", "monitoring"],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -23,10 +36,10 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
-    "@dispatch/node": "workspace:*"
+    "@dispatchitapp/node": "workspace:*"
   },
   "devDependencies": {
-    "@dispatch/core": "workspace:*",
+    "@dispatchitapp/core": "workspace:*",
     "@types/node": "^20.14.0",
     "tsup": "^8.0.0",
     "typescript": "^5.5.0",

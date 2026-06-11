@@ -16,13 +16,13 @@ product; everything else is idiomatic per language. So this repo is organized co
 
 ```
 contract/        ← THE SOURCE OF TRUTH. OpenAPI + JSON Schema + golden fixtures.
-packages/        ← JavaScript/TypeScript SDKs (pnpm workspace, @dispatch/* on npm)
+packages/        ← JavaScript/TypeScript SDKs (pnpm workspace, @dispatchitapp/* on npm)
   core/            framework-agnostic core (config, event schema, sampling, transport types)
   node/            Node server SDK (manual capture, auto-capture, source context)
   express/         Express adapter            fastify/  Fastify adapter
   browser/         browser error tracker + feedback widget          (later phase)
   react/  vue/     thin UI wrappers           (later phase)
-python/          ← Python SDK (dispatch-sdk on PyPI, framework extras)
+python/          ← Python SDK (dispatchitapp on PyPI, framework extras)
 conformance/     ← cross-language golden-fixture runner (the invariant gate)
 ```
 

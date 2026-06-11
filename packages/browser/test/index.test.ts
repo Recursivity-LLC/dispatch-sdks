@@ -2,7 +2,7 @@
 // (no DOM needed here; node env keeps import.meta.url a real file:// URL for schema loading)
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
-import type { DispatchEvent, TicketPayload, TicketResponse, Transport } from "@dispatch/core";
+import type { DispatchEvent, TicketPayload, TicketResponse, Transport } from "@dispatchitapp/core";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import { afterEach, describe, expect, it } from "vitest";
