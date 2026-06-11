@@ -30,8 +30,10 @@ workflows:
    created on npmjs.com. Naming history: `dispatch` was denied (npm blocks it — collides with
    the existing unscoped `dispatch` package) and `dispatchit` was already taken, so the scope
    is `@dispatchitapp` (it still maps to the dispatchit.app brand).
-2. Create a **granular access token** (Account → Access Tokens → Generate → Granular):
-   read+write to the `@dispatchitapp` scope, no expiry or a long one.
+2. Create a classic **Automation** token (Account → Access Tokens → Generate New Token →
+   Classic Token → **Automation**). Automation tokens bypass 2FA — a Granular or Publish
+   token triggers an `EOTP` ("one-time password required") error at publish time, which a
+   CI runner can't answer.
 3. Add it to the repo as the **`NPM_TOKEN`** secret (Settings → Secrets and variables →
    Actions).
 4. Provenance (the green "built on GitHub Actions" badge) needs nothing extra — the workflow
